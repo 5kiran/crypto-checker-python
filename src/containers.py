@@ -9,6 +9,7 @@ class Container(containers.DeclarativeContainer):
     
     wiring_config = containers.WiringConfiguration(packages=["apis"],auto_wire=True)
     
+    db_session = providers.Factory()
     google_auth_service = providers.Factory(GoogleAuthService)
     user_repository = providers.Factory(UserRepository)
     user_service = providers.Factory(UserService,user_repository=user_repository,google_auth_service=google_auth_service)

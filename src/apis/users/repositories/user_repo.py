@@ -1,7 +1,9 @@
 from .interfaces.user_repo_interface import IUserRepository
 from db.models.user_model import User
+from sqlalchemy.orm import Session, lazyload
 
-class UserRepository(IUserRepository): 
+class UserRepository(IUserRepository):
+    db: Session
     def save(self,
              user: User):
         return user
