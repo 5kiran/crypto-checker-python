@@ -1,20 +1,13 @@
 from abc import ABCMeta, abstractmethod
 
-class User:
-    id: str
-    name: str
-    email: str
-    password: str
-    memo: str | None
-
 
 class IUserRepository(metaclass=ABCMeta):
     @abstractmethod
-    def save(self, user: User):
+    async def save(self, user: str) -> str:
         raise NotImplementedError
 
     @abstractmethod
-    def find_by_email(self, email: str) -> User:
+    async def find_by_email(self, email: str) -> str:
         """
         이메일로 유저를 검색한다.
         검색한 유저가 없을 경우 422 에러를 발생시킨다.
