@@ -1,5 +1,6 @@
 import enum
 import uuid
+from typing import Optional
 
 from sqlalchemy import String, text, ForeignKey, Uuid
 from sqlalchemy.orm import Mapped, relationship
@@ -23,10 +24,12 @@ class Wallet(Base):
         primary_key=True,
         server_default=text("gen_random_uuid()"),
     )
-    name: Mapped[str | None] = mapped_column(String, nullable=True)
-    address: Mapped[str] = mapped_column(String, nullable=False)
+    name: Mapped[Optional[str]] = mapped_column(
+        String, nullable=True, comment="지갑 이름"
+    )
+    address: Mapped[str] = mapped_column(String, nullable=False, comment="지갑 주소")
 
     user_id: Mapped[str] = mapped_column(
-        ForeignKey("user.id", ondelete="CASCADE"), nullable=False
+        ForeignKey("user.id", ondelete="CASCADE"), nullable=False, comment="유저 id"
     )
     user: Mapped["User"] = relationship("User", back_populates="wallets")
