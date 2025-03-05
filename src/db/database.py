@@ -10,7 +10,9 @@ from src.db.models import user_model
 from src.db.models import wallet_model
 from src.db.models import project_model
 from src.db.models import mission_model
-from src.db.models import announcement_model
+from src.db.models import post_model
+from src.db.models import comment_model
+from src.db.models import joined_mission_model
 
 SQLALCHEMY_DATABASE_URL = "postgresql://crypto:crypto1@localhost:5432/crypto-checker"
 

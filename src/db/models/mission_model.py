@@ -29,10 +29,10 @@ class Mission(Base):
     )
     title: Mapped[str] = mapped_column(String, nullable=False, comment="제목")
     url: Mapped[str] = mapped_column(String, nullable=False, comment="미션 페이지 URL")
-    participation_start_at: Mapped[datetime.datetime] = mapped_column(
+    start_at: Mapped[datetime.datetime] = mapped_column(
         DateTime, nullable=False, comment="참여 시작 시간"
     )
-    participation_end_at: Mapped[datetime.datetime] = mapped_column(
+    end_at: Mapped[datetime.datetime] = mapped_column(
         DateTime, nullable=False, comment="참여 종료 시간"
     )
     draw_at: Mapped[Optional[datetime.datetime]] = mapped_column(
@@ -48,3 +48,7 @@ class Mission(Base):
         comment="프로젝트 id",
     )
     project: Mapped["Project"] = relationship("Project", back_populates="missions")
+
+    joined_missions: Mapped[list["JoinedMission"]] = relationship(
+        "JoinedMission", back_populates="mission", cascade="all, delete-orphan"
+    )
