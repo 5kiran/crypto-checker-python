@@ -1,15 +1,13 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
-from apis.users.router.user_router import router as users_router
 from src.containers import Container
-from src.db.database import Base
-from src.db.database import engine
+from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+
+from src.apis.auth.router.auth_rotuer import router as auth_router
+from src.apis.users.router.user_router import router as user_router
+
+container = Container()
 
 app = FastAPI()
-container = Container()
-container.init_resources()
-app.container = container
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,4 +17,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(users_router)
+app.include_router(user_router)
+app.include_router(auth_router)

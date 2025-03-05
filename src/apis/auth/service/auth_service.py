@@ -27,17 +27,21 @@ class GoogleAuthResponse(BaseModel):
     jti: str | None
 
 
-class GoogleAuthService:
-    @inject
+class AuthService:
     def __init__(self):
         self.google_client_id = os.environ.get("GOOGLE_CLIENT_ID")
 
     async def verify_token(self, token: str) -> GoogleAuthResponse:
-        user = id_token.verify_oauth2_token(
-            token, google_requests.Request(), self.google_client_id
-        )
+        try:
+            response = id_token.verify_oauth2_token(
+                token, google_requests.Request(), self.google_client_id
+            )
+        except:
+            raise HTTPException(status_code=500, detail="Google Auth Error")
 
-        if not user:
+        if not response:
             raise HTTPException(status_code=403, detail="유저 정보를 찾을 수 없습니다.")
 
-        return GoogleAuthResponse.model_validate(user)
+        # user = GoogleAuthResponse.model_validate(response)
+
+        return response

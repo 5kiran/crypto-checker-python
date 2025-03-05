@@ -25,6 +25,7 @@ class User(Base):
         primary_key=True,
         server_default=text("gen_random_uuid()"),
     )
+    sub_id: Mapped[str] = mapped_column(String, nullable=False, comment="GOOGLE_SUB_ID")
     nickname: Mapped[str] = mapped_column(String, nullable=False, comment="닉네임")
     name: Mapped[Optional[str]] = mapped_column(String, nullable=True, comment="이름")
     phone_number: Mapped[Optional[str]] = mapped_column(
