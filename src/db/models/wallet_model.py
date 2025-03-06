@@ -7,7 +7,6 @@ from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.orm import mapped_column
 
 from src.db.database import Base
-from src.db.models.user_model import User
 
 
 class WalletType(enum.Enum):

@@ -1,31 +1,22 @@
 from abc import ABCMeta, abstractmethod
+from typing import Optional
+
+from src.db.models.user_model import User
 
 
 class IUserRepository(metaclass=ABCMeta):
     @abstractmethod
-    async def save(self, user: str) -> str:
-        raise NotImplementedError
+    async def create_user(self, user: User) -> User:
+        pass
 
     @abstractmethod
-    async def find_by_email(self, email: str) -> str:
-        """
-        이메일로 유저를 검색한다.
-        검색한 유저가 없을 경우 422 에러를 발생시킨다.
-        """
-        raise NotImplementedError
+    async def update_user(self, user: User) -> User:
+        pass
 
-    # @abstractmethod
-    # def find_by_id(self, id: str) -> User:
-    #     raise NotImplementedError
+    @abstractmethod
+    async def get_user_by_sub_id(self, sub_id: str) -> Optional[User]:
+        pass
 
-    # @abstractmethod
-    # def update(self, user: User):
-    #     raise NotImplementedError
-
-    # @abstractmethod
-    # def get_users(self, page: int, items_per_page: int) -> tuple[int, list[User]]:
-    #     raise NotImplementedError
-
-    # @abstractmethod
-    # def delete(self, id: str):
-    #     raise NotImplementedError
+    @abstractmethod
+    async def get_user_by_refresh_token(self, refresh_token: str) -> Optional[User]:
+        pass

@@ -1,4 +1,3 @@
-from src.containers import Container
 from dependency_injector.wiring import Provide
 from dependency_injector.wiring import inject
 from fastapi import APIRouter, Depends
@@ -15,10 +14,9 @@ class GoogleAuthBody(BaseModel):
 
 @router.get("/email")
 @inject
-async def getEmail(
+async def get_email(
     email: str,
     user_service: UserService = Depends(Provide["user_service"]),
 ):
-    print(user_service)
     user = await user_service.get_email(email)
     return user

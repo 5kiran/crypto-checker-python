@@ -1,6 +1,7 @@
 import datetime
 import enum
 import uuid
+from dataclasses import dataclass
 from typing import Optional
 
 from sqlalchemy import String, Enum, DateTime, text, Uuid, Boolean
@@ -17,6 +18,7 @@ class UserRole(enum.Enum):
     ADMIN = "ADMIN"
 
 
+@dataclass
 class User(Base):
     __tablename__ = "user"
 
@@ -66,6 +68,6 @@ class User(Base):
         "Comment", back_populates="user", cascade="all, delete-orphan"
     )
 
-    joined_missions: Mapped[list["Mission"]] = relationship(
-        "Mission", back_populates="user", cascade="all, delete-orphan"
+    joined_missions: Mapped[list["JoinedMission"]] = relationship(
+        "JoinedMission", back_populates="user", cascade="all, delete-orphan"
     )
