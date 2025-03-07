@@ -1,5 +1,6 @@
 import enum
 import uuid
+from dataclasses import dataclass
 from typing import Optional
 
 from sqlalchemy import Uuid, text, String, Boolean, Enum
@@ -14,6 +15,7 @@ class Layer(enum.Enum):
     L3 = "L3"
 
 
+@dataclass
 class Project(Base):
     __tablename__ = "project"
 

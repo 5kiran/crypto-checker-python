@@ -57,17 +57,29 @@ class User(Base):
     )
 
     wallets: Mapped[list["Wallet"]] = relationship(
-        "Wallet", back_populates="user", cascade="all, delete-orphan"
+        "Wallet",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        lazy="noload",
     )
 
     posts: Mapped[list["Post"]] = relationship(
-        "Post", back_populates="user", cascade="all, delete-orphan"
+        "Post",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        lazy="noload",
     )
 
     comments: Mapped[list["Comment"]] = relationship(
-        "Comment", back_populates="user", cascade="all, delete-orphan"
+        "Comment",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        lazy="noload",
     )
 
     joined_missions: Mapped[list["JoinedMission"]] = relationship(
-        "JoinedMission", back_populates="user", cascade="all, delete-orphan"
+        "JoinedMission",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        lazy="noload",
     )

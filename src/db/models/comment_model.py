@@ -1,4 +1,5 @@
 import uuid
+from dataclasses import dataclass
 
 from sqlalchemy import Uuid, text, ForeignKey, String
 from sqlalchemy.orm import Mapped, relationship
@@ -7,6 +8,7 @@ from sqlalchemy.testing.schema import mapped_column
 from src.db.database import Base
 
 
+@dataclass
 class Comment(Base):
     __tablename__ = "comment"
 

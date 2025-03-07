@@ -1,6 +1,7 @@
 import datetime
 import enum
 import uuid
+from dataclasses import dataclass
 from typing import Optional
 
 from sqlalchemy import Uuid, text, Enum, String, DateTime, Date, ForeignKey
@@ -16,6 +17,7 @@ class MissionType(enum.Enum):
     QUEST = "QUEST"
 
 
+@dataclass
 class Mission(Base):
     __tablename__ = "mission"
 

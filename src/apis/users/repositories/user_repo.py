@@ -15,15 +15,11 @@ class UserRepository(IUserRepository):
     async def create_user(self, user: User) -> User:
         user = self.db.add(user)
 
-        self.db.commit()
-
         return user
 
     async def update_user(self, user: User) -> User:
         user.updated_at = datetime.datetime.now()
         user = self.db.query(User)
-
-        self.db.commit()
 
         return user
 

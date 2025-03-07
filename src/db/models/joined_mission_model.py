@@ -1,4 +1,5 @@
 import uuid
+from dataclasses import dataclass
 
 from sqlalchemy import Uuid, text, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -6,6 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.db.database import Base
 
 
+@dataclass
 class JoinedMission(Base):
     __tablename__ = "joined_mission"
 

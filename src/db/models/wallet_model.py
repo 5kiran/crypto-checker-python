@@ -1,5 +1,6 @@
 import enum
 import uuid
+from dataclasses import dataclass
 from typing import Optional
 
 from sqlalchemy import String, text, ForeignKey, Uuid
@@ -15,6 +16,7 @@ class WalletType(enum.Enum):
     SUI = "SUI"
 
 
+@dataclass
 class Wallet(Base):
     __tablename__ = "wallet"
 
@@ -31,4 +33,7 @@ class Wallet(Base):
     user_id: Mapped[str] = mapped_column(
         ForeignKey("user.id", ondelete="CASCADE"), nullable=False, comment="유저 id"
     )
-    user: Mapped["User"] = relationship("User", back_populates="wallets")
+    user: Mapped["User"] = relationship(
+        "User",
+        back_populates="wallets",
+    )

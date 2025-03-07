@@ -1,5 +1,6 @@
 import datetime
 import uuid
+from dataclasses import dataclass
 
 from sqlalchemy import String, DateTime, ForeignKey, Uuid, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -7,6 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.db.database import Base
 
 
+@dataclass
 class Post(Base):
     __tablename__ = "post"
 

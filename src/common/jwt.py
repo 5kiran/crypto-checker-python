@@ -1,10 +1,10 @@
 import uuid
-from typing import Annotated
 
 from dependency_injector.wiring import Provide, inject
 from fastapi import HTTPException, Depends
 from fastapi.security import OAuth2AuthorizationCodeBearer
 from jose import jwt
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from src.config import get_setting
@@ -58,7 +58,6 @@ def decode_access_token(token: str, verify_exp: bool):
 def decode_refresh_token(token: str):
     try:
         payload = jwt.decode(token, REFRESH_SECRET_KEY, algorithms=[ALGORITHM])
-        print(payload)
         return payload
     except:
         raise HTTPException(status_code=401)
@@ -66,6 +65,7 @@ def decode_refresh_token(token: str):
 
 async def get_user(user_id: str, db: Session) -> User:
     user = db.query(User).filter(User.id == user_id).one_or_none()
+
     if not user:
         raise HTTPException(status_code=401, detail="GET_USER")
 
