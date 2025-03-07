@@ -4,7 +4,8 @@ from fastapi import APIRouter, Depends
 from fastapi.security import HTTPBearer
 
 from src.apis.users.dto.request.modify_user_request import ModifyUserRequest
-from src.apis.users.dto.response.modify_user_response import ModifyUserResponse
+from src.apis.users.dto.response.get_me_response import GetMeResponse
+
 from src.apis.users.service.user_service import UserService
 from src.common.jwt import get_current_user
 from src.db.models.user_model import User
@@ -18,12 +19,14 @@ async def update_user(
     body: ModifyUserRequest,
     user_service: UserService = Depends(Provide["user_service"]),
     current_user: User = Depends(get_current_user),
-) -> None:
-    await user_service.modify_user(body, current_user)
+):
+    user = await user_service.modify_user(body=body, user=current_user)
+
+    return
 
 
 @router.get("/me", dependencies=[Depends(HTTPBearer())])
-async def get_access_token(
+async def get_me(
     current_user: User = Depends(get_current_user),
-) -> ModifyUserResponse:
+) -> GetMeResponse:
     return current_user

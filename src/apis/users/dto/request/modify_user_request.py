@@ -4,5 +4,5 @@ from pydantic import BaseModel
 
 
 class ModifyUserRequest(BaseModel):
-    nickname: Optional[str] = None
+    nickname: str
     phone_number: Optional[str] = None

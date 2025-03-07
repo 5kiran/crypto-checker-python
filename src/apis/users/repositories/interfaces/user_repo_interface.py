@@ -10,10 +10,6 @@ class IUserRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    async def update_user(self, user: User) -> User:
-        pass
-
-    @abstractmethod
     async def get_user_by_sub_id(self, sub_id: str) -> Optional[User]:
         pass
 

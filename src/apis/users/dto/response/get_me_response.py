@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from src.db.models.user_model import UserRole
 
 
-class ModifyUserResponse(BaseModel):
+class GetMeResponse(BaseModel):
     nickname: str
     name: Optional[str]
     phone_number: Optional[str]
