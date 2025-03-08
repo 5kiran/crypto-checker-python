@@ -1,3 +1,4 @@
+import datetime
 import uuid
 from typing import Optional
 
@@ -29,12 +30,15 @@ class Payload(BaseModel):
     user_id: Optional[str] = None
     sub_id: Optional[str] = None
     jti: Optional[str] = None
+    exp: int
 
 
 def generate_access_token(user_id: str, sub_id: str) -> str:
+    expire = datetime.datetime.now() + datetime.timedelta(minutes=10)
     payload = {
         "user_id": user_id,
         "sub_id": sub_id,
+        "exp": int(expire.timestamp()),
     }
 
     access_jwt = jwt.encode(payload, ACCESS_SECRET_KEY, algorithm=ALGORITHM)
@@ -42,8 +46,10 @@ def generate_access_token(user_id: str, sub_id: str) -> str:
 
 
 def generate_refresh_token() -> str:
+    expire = datetime.datetime.now() + datetime.timedelta(days=7)
     payload = {
         "jti": str(uuid.uuid4()),
+        "exp": int(expire.timestamp()),
     }
 
     refresh_jwt = jwt.encode(payload, REFRESH_SECRET_KEY, algorithm=ALGORITHM)
@@ -58,6 +64,8 @@ def decode_access_token(token: str, verify_exp: bool) -> Payload:
             algorithms=[ALGORITHM],
             options={"verify_exp": verify_exp},
         )
+
+        print(payload)
 
         return Payload(**payload)
     except:

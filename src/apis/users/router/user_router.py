@@ -19,14 +19,14 @@ async def update_user(
     body: ModifyUserRequest,
     user_service: UserService = Depends(Provide["user_service"]),
     current_user: User = Depends(get_current_user),
-):
+) -> GetMeResponse:
     user = await user_service.modify_user(body=body, user=current_user)
 
-    return
+    return GetMeResponse.model_validate(user)
 
 
 @router.get("/me", dependencies=[Depends(HTTPBearer())])
 async def get_me(
     current_user: User = Depends(get_current_user),
 ) -> GetMeResponse:
-    return current_user
+    return GetMeResponse.model_validate(current_user)

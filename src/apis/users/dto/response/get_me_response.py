@@ -14,3 +14,6 @@ class GetMeResponse(BaseModel):
     profile_image: Optional[str]
     role: Optional[UserRole]
     signed_at: datetime
+
+    class Config:
+        from_attributes = True

@@ -7,7 +7,7 @@ from src.containers import Container
 
 container = Container()
 
-app = FastAPI()
+app = FastAPI(swagger_ui_parameters={"persistAuthorization": True})
 
 app.add_middleware(
     CORSMiddleware,
