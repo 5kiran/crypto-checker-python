@@ -3,6 +3,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from src.apis.auth.router.auth_rotuer import router as auth_router
 from src.apis.users.router.user_router import router as user_router
+from src.apis.wallets.router.wallet_router import router as wallet_router
 from src.containers import Container
 
 container = Container()
@@ -19,3 +20,4 @@ app.add_middleware(
 
 app.include_router(user_router)
 app.include_router(auth_router)
+app.include_router(wallet_router)

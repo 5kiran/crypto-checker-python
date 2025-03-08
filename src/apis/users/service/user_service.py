@@ -1,4 +1,5 @@
-from dependency_injector.wiring import inject
+from dependency_injector.wiring import inject, Provide
+from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from src.apis.users.dto.request.modify_user_request import ModifyUserRequest
@@ -10,11 +11,11 @@ class UserService:
     @inject
     def __init__(
         self,
-        db: Session,
         user_repository: IUserRepository,
+        db: Session = Depends(Provide["db_session"]),
     ):
-        self.db = db
         self.user_repository = user_repository
+        self.db = db
 
     async def get_user_by_sub_id(self, sub_id: str) -> User:
         user = await self.user_repository.get_user_by_sub_id(sub_id)

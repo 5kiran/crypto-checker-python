@@ -8,11 +8,11 @@ from src.db.models.user_model import UserRole
 
 class GetMeResponse(BaseModel):
     nickname: str
-    name: Optional[str]
-    phone_number: Optional[str]
+    name: Optional[str] = None
+    phone_number: Optional[str] = None
     email: str
-    profile_image: Optional[str]
-    role: Optional[UserRole]
+    profile_image: Optional[str] = None
+    role: Optional[UserRole] = None
     signed_at: datetime
 
     class Config:

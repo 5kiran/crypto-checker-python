@@ -3,7 +3,7 @@ import uuid
 from dataclasses import dataclass
 from typing import Optional
 
-from sqlalchemy import String, text, ForeignKey, Uuid
+from sqlalchemy import String, text, ForeignKey, Uuid, Enum
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.orm import mapped_column
 
@@ -11,9 +11,12 @@ from src.db.database import Base
 
 
 class WalletType(enum.Enum):
-    EVM = "EVM"
-    SOL = "SOL"
+    METAMASK = "METAMASK"
+    PHANTOM = "PHANTOM"
     SUI = "SUI"
+    BACK_PACK = "BACK_PACK"
+    OKX = "OKX"
+    BINANCE = "BINANCE"
 
 
 @dataclass
@@ -28,6 +31,11 @@ class Wallet(Base):
     name: Mapped[Optional[str]] = mapped_column(
         String, nullable=True, comment="지갑 이름"
     )
+    type: Mapped[WalletType] = mapped_column(
+        Enum(WalletType),
+        nullable=False,
+        comment="지갑 종류",
+    )
     address: Mapped[str] = mapped_column(String, nullable=False, comment="지갑 주소")
 
     user_id: Mapped[str] = mapped_column(
@@ -36,4 +44,5 @@ class Wallet(Base):
     user: Mapped["User"] = relationship(
         "User",
         back_populates="wallets",
+        lazy="noload",
     )

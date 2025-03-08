@@ -25,8 +25,8 @@ settings = get_setting()
 class AuthService:
     def __init__(
         self,
-        db: Session = Depends(Provide["db_session"]),
         user_service: UserService = Depends(Provide["user_service"]),
+        db: Session = Depends(Provide["db_session"]),
     ):
         self.db = db
         self.user_service = user_service
