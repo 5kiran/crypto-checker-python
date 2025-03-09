@@ -26,9 +26,9 @@ class JoinedMission(Base):
         "Mission", back_populates="joined_missions"
     )
 
-    user_id: Mapped[str] = mapped_column(
-        ForeignKey("user.id", ondelete="CASCADE"),
+    wallet_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("wallet.id", ondelete="CASCADE"),
         nullable=False,
-        comment="미션 id",
+        comment="지갑 id",
     )
-    user: Mapped["User"] = relationship("User", back_populates="joined_missions")
+    wallet: Mapped["Wallet"] = relationship("Wallet", back_populates="joined_missions")

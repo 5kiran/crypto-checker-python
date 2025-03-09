@@ -9,7 +9,7 @@ from src.apis.auth.service.auth_service import AuthService
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-@router.get("/temp-token")
+@router.get("/temp-token", description="임시로 만든 함수")
 @inject
 async def temp_token(
     google_sub: str,

@@ -36,9 +36,7 @@ class AuthService:
         user = await self.user_service.get_user_by_sub_id(google_sub)
 
         new_refresh_token = generate_refresh_token()
-        new_access_token = generate_access_token(
-            user_id=str(user.id), sub_id=user.sub_id
-        )
+        new_access_token = generate_access_token(user_id=user.id, sub_id=user.sub_id)
 
         user.refresh_token = new_refresh_token
         user.updated_at = datetime.now()
@@ -80,7 +78,7 @@ class AuthService:
             user.refresh_token = refresh_token
             user.updated_at = datetime.now()
 
-        access_token = generate_access_token(user_id=str(user.id), sub_id=user.sub_id)
+        access_token = generate_access_token(user_id=user.id, sub_id=user.sub_id)
 
         self.db.commit()
         return AuthResponse(access_token=access_token, refresh_token=refresh_token)
@@ -98,9 +96,7 @@ class AuthService:
             raise HTTPException(status_code=401)
 
         new_refresh_token = generate_refresh_token()
-        new_access_token = generate_access_token(
-            user_id=str(user.id), sub_id=user.sub_id
-        )
+        new_access_token = generate_access_token(user_id=user.id, sub_id=user.sub_id)
 
         user.refresh_token = new_refresh_token
         user.updated_at = datetime.now()

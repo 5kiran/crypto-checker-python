@@ -26,7 +26,7 @@ class Post(Base):
         DateTime, nullable=True, comment="업데이트 시간"
     )
 
-    user_id: Mapped[str] = mapped_column(
+    user_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("user.id", ondelete="CASCADE"), nullable=False, comment="유저 id"
     )
     user: Mapped["User"] = relationship("User", back_populates="posts")

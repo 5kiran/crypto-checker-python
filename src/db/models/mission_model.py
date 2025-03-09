@@ -44,7 +44,7 @@ class Mission(Base):
         Date, nullable=True, comment="보상 시간"
     )
 
-    project_id: Mapped[str] = mapped_column(
+    project_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("project.id", ondelete="CASCADE"),
         nullable=False,
         comment="프로젝트 id",

@@ -20,12 +20,12 @@ class Comment(Base):
 
     content: Mapped[str] = mapped_column(String, nullable=False, comment="본문")
 
-    user_id: Mapped[str] = mapped_column(
+    user_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("user.id", ondelete="CASCADE"), nullable=False, comment="유저 id"
     )
     user: Mapped["User"] = relationship("User", back_populates="comments")
 
-    post_id: Mapped[str] = mapped_column(
+    post_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("post.id", ondelete="CASCADE"),
         nullable=False,
         comment="게시글 id",

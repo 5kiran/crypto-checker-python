@@ -38,11 +38,18 @@ class Wallet(Base):
     )
     address: Mapped[str] = mapped_column(String, nullable=False, comment="지갑 주소")
 
-    user_id: Mapped[str] = mapped_column(
+    user_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("user.id", ondelete="CASCADE"), nullable=False, comment="유저 id"
     )
     user: Mapped["User"] = relationship(
         "User",
         back_populates="wallets",
+        lazy="noload",
+    )
+
+    joined_missions: Mapped[list["JoinedMission"]] = relationship(
+        "JoinedMission",
+        back_populates="wallet",
+        cascade="all, delete-orphan",
         lazy="noload",
     )

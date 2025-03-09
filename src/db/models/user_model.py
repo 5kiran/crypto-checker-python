@@ -76,10 +76,3 @@ class User(Base):
         cascade="all, delete-orphan",
         lazy="noload",
     )
-
-    joined_missions: Mapped[list["JoinedMission"]] = relationship(
-        "JoinedMission",
-        back_populates="user",
-        cascade="all, delete-orphan",
-        lazy="noload",
-    )

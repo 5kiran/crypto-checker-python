@@ -33,10 +33,10 @@ class Payload(BaseModel):
     exp: int
 
 
-def generate_access_token(user_id: str, sub_id: str) -> str:
+def generate_access_token(user_id: uuid.UUID, sub_id: str) -> str:
     expire = datetime.datetime.now() + datetime.timedelta(hours=1)
     payload = {
-        "user_id": user_id,
+        "user_id": str(user_id),
         "sub_id": sub_id,
         "exp": int(expire.timestamp()),
     }

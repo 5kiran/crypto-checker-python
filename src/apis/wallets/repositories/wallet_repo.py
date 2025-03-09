@@ -1,3 +1,6 @@
+import uuid
+from typing import Optional
+
 from dependency_injector.wiring import Provide
 from fastapi import Depends
 from sqlalchemy import select
@@ -6,6 +9,7 @@ from sqlalchemy.orm import Session
 from src.apis.wallets.repositories.interfaces.wallet_repo_interface import (
     IWalletRepository,
 )
+from src.db.models.joined_mission_model import JoinedMission
 from src.db.models.wallet_model import Wallet
 
 
@@ -18,8 +22,20 @@ class WalletRepository(IWalletRepository):
 
         return wallet
 
-    async def get_wallets(self, user_id: str) -> list[Wallet]:
+    async def get_wallets(self, user_id: uuid.UUID) -> list[Wallet]:
         stmt = select(Wallet).where(Wallet.user_id == user_id)
         wallets = self.db.execute(stmt).scalars().all()
 
         return list(wallets)
+
+    async def get_wallet(
+        self, wallet_id: uuid.UUID, user_id: uuid.UUID
+    ) -> Optional[Wallet]:
+        stmt = (
+            select(Wallet, JoinedMission)
+            .join(JoinedMission, JoinedMission.wallet_id == Wallet.id)
+            .where(Wallet.id == wallet_id and Wallet.user_id == user_id)
+        )
+        wallet = self.db.execute(stmt).all()
+
+        return wallet

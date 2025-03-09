@@ -1,3 +1,4 @@
+import uuid
 from typing import List
 
 from dependency_injector.wiring import inject, Provide
@@ -35,3 +36,15 @@ async def get_wallets(
     wallets = await wallet_service.get_wallets(user=current_user)
 
     return [GetWalletResponse.model_validate(wallet) for wallet in wallets]
+
+
+@router.get("/{wallet_id}", dependencies=[Depends(HTTPBearer())])
+@inject
+async def get_wallets(
+    wallet_id: uuid.UUID,
+    wallet_service: WalletService = Depends(Provide["wallet_service"]),
+    current_user: User = Depends(get_current_user),
+):
+    wallet = await wallet_service.get_wallet(wallet_id=wallet_id, user=current_user)
+
+    return wallet
