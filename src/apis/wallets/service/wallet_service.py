@@ -1,6 +1,7 @@
 import uuid
 
 from dependency_injector.wiring import inject, Provide
+from fastapi import HTTPException
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
 
@@ -41,5 +42,8 @@ class WalletService:
         wallet = await self.wallet_repository.get_wallet(
             wallet_id=wallet_id, user_id=user.id
         )
+
+        if not wallet:
+            raise HTTPException(status_code=404, detail="Wallet not found")
 
         return wallet

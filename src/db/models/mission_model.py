@@ -49,8 +49,15 @@ class Mission(Base):
         nullable=False,
         comment="프로젝트 id",
     )
-    project: Mapped["Project"] = relationship("Project", back_populates="missions")
+    project: Mapped["Project"] = relationship(
+        "Project",
+        back_populates="missions",
+        lazy="noload",
+    )
 
     joined_missions: Mapped[list["JoinedMission"]] = relationship(
-        "JoinedMission", back_populates="mission", cascade="all, delete-orphan"
+        "JoinedMission",
+        back_populates="mission",
+        cascade="all, delete-orphan",
+        lazy="noload",
     )

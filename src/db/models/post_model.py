@@ -27,10 +27,19 @@ class Post(Base):
     )
 
     user_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("user.id", ondelete="CASCADE"), nullable=False, comment="유저 id"
+        ForeignKey("user.id", ondelete="CASCADE"),
+        nullable=False,
+        comment="유저 id",
     )
-    user: Mapped["User"] = relationship("User", back_populates="posts")
+    user: Mapped["User"] = relationship(
+        "User",
+        back_populates="posts",
+        lazy="noload",
+    )
 
     comments: Mapped[list["Comment"]] = relationship(
-        "Comment", back_populates="post", cascade="all, delete-orphan"
+        "Comment",
+        back_populates="post",
+        cascade="all, delete-orphan",
+        lazy="noload",
     )

@@ -47,5 +47,8 @@ class Project(Base):
     )
 
     missions: Mapped[list["Mission"]] = relationship(
-        "Mission", back_populates="project", cascade="all, delete-orphan"
+        "Mission",
+        back_populates="project",
+        cascade="all, delete-orphan",
+        lazy="noload",
     )

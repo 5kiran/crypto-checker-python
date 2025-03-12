@@ -3,13 +3,14 @@ from typing import Optional
 
 from dependency_injector.wiring import Provide
 from fastapi import Depends
-from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy import select, func
+from sqlalchemy.orm import Session, joinedload
 
 from src.apis.wallets.repositories.interfaces.wallet_repo_interface import (
     IWalletRepository,
 )
 from src.db.models.joined_mission_model import JoinedMission
+from src.db.models.mission_model import Mission
 from src.db.models.wallet_model import Wallet
 
 
@@ -32,10 +33,12 @@ class WalletRepository(IWalletRepository):
         self, wallet_id: uuid.UUID, user_id: uuid.UUID
     ) -> Optional[Wallet]:
         stmt = (
-            select(Wallet, JoinedMission)
-            .join(JoinedMission, JoinedMission.wallet_id == Wallet.id)
+            select(Wallet)
+            .options(
+                joinedload(Wallet.joined_missions).joinedload(JoinedMission.mission)
+            )
             .where(Wallet.id == wallet_id and Wallet.user_id == user_id)
         )
-        wallet = self.db.execute(stmt).all()
 
+        wallet = self.db.execute(stmt).scalars().first()
         return wallet

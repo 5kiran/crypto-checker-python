@@ -65,8 +65,6 @@ def decode_access_token(token: str, verify_exp: bool) -> Payload:
             options={"verify_exp": verify_exp},
         )
 
-        print(payload)
-
         return Payload(**payload)
     except:
         raise HTTPException(status_code=401)
@@ -98,7 +96,6 @@ async def get_current_user(
     db: Session = Depends(Provide["db_session"]),
 ) -> User:
     payload = decode_access_token(token=token, verify_exp=True)
-    print(payload)
     user_id = payload.user_id
 
     user = await get_user(user_id=user_id, db=db)

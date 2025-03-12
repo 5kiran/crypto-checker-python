@@ -30,4 +30,8 @@ class Comment(Base):
         nullable=False,
         comment="게시글 id",
     )
-    post: Mapped["Post"] = relationship("Post", back_populates="comments")
+    post: Mapped["Post"] = relationship(
+        "Post",
+        back_populates="comments",
+        lazy="noload",
+    )
