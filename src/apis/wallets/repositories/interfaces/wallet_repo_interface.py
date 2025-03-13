@@ -2,8 +2,6 @@ import uuid
 from abc import ABCMeta, abstractmethod
 from typing import Optional
 
-from src.db.models.joined_mission_model import JoinedMission
-from src.db.models.mission_model import Mission
 from src.db.models.wallet_model import Wallet
 
 

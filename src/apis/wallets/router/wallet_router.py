@@ -22,7 +22,6 @@ async def create_wallet(
     wallet_service: WalletService = Depends(Provide["wallet_service"]),
     current_user: User = Depends(get_current_user),
 ) -> CreateWalletResponse:
-    type(body)
     wallet = await wallet_service.create_wallet(body=body, user=current_user)
 
     return CreateWalletResponse.model_validate(wallet)

@@ -1,6 +1,8 @@
 from dependency_injector import containers, providers
 
 from src.apis.auth.service.auth_service import AuthService
+from src.apis.projects.repositories.project_repo import ProjectRepository
+from src.apis.projects.service.project_service import ProjectService
 from src.apis.users.repositories.user_repo import UserRepository
 from src.apis.users.service.user_service import UserService
 from src.apis.wallets.repositories.wallet_repo import WalletRepository
@@ -12,7 +14,12 @@ class Container(containers.DeclarativeContainer):
     config = providers.Configuration()
 
     wiring_config = containers.WiringConfiguration(
-        packages=["src.apis.auth", "src.apis.users", "src.apis.wallets"],
+        packages=[
+            "src.apis.auth",
+            "src.apis.users",
+            "src.apis.wallets",
+            "src.apis.projects",
+        ],
         auto_wire=True,
     )
 
@@ -36,4 +43,9 @@ class Container(containers.DeclarativeContainer):
         WalletService,
         wallet_repository=wallet_repository,
         db=db_session,
+    )
+
+    project_repository = providers.Factory(ProjectRepository, db=db_session)
+    project_service = providers.Factory(
+        ProjectService, project_repository=project_repository, db=db_session
     )

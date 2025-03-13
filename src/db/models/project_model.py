@@ -9,12 +9,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.db.database import Base
 
 
-class Layer(enum.Enum):
-    L1 = "L1"
-    L2 = "L2"
-    L3 = "L3"
-
-
 @dataclass
 class Project(Base):
     __tablename__ = "project"
@@ -25,11 +19,9 @@ class Project(Base):
         server_default=text("gen_random_uuid()"),
     )
     name: Mapped[str] = mapped_column(String, nullable=False, comment="체인 이름")
-    layer: Mapped[Layer] = mapped_column(
-        Enum(Layer), nullable=False, default=Layer.L1, comment="L1,L2,L3"
-    )
     image: Mapped[str] = mapped_column(String, nullable=False, comment="체인 이미지")
     home_page: Mapped[str] = mapped_column(String, nullable=False, comment="홈페이지")
+    git_hub: Mapped[str] = mapped_column(String, nullable=True, comment="프로젝트 깃헙")
     discord: Mapped[Optional[str]] = mapped_column(
         String, nullable=True, comment="디스코드 주소"
     )

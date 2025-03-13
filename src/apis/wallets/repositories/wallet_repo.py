@@ -3,14 +3,13 @@ from typing import Optional
 
 from dependency_injector.wiring import Provide
 from fastapi import Depends
-from sqlalchemy import select, func
+from sqlalchemy import select
 from sqlalchemy.orm import Session, joinedload
 
 from src.apis.wallets.repositories.interfaces.wallet_repo_interface import (
     IWalletRepository,
 )
 from src.db.models.joined_mission_model import JoinedMission
-from src.db.models.mission_model import Mission
 from src.db.models.wallet_model import Wallet
 
 
