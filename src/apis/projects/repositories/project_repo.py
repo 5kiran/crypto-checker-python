@@ -24,3 +24,8 @@ class ProjectRepository(IProjectRepository):
         ).scalar()
 
         return list(projects), total_count
+
+    async def create_project(self, project: Project) -> Project:
+        self.db.add(project)
+
+        return project

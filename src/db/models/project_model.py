@@ -21,7 +21,9 @@ class Project(Base):
     name: Mapped[str] = mapped_column(String, nullable=False, comment="체인 이름")
     image: Mapped[str] = mapped_column(String, nullable=False, comment="체인 이미지")
     home_page: Mapped[str] = mapped_column(String, nullable=False, comment="홈페이지")
-    git_hub: Mapped[str] = mapped_column(String, nullable=True, comment="프로젝트 깃헙")
+    git_hub: Mapped[Optional[str]] = mapped_column(
+        String, nullable=True, comment="프로젝트 깃헙"
+    )
     discord: Mapped[Optional[str]] = mapped_column(
         String, nullable=True, comment="디스코드 주소"
     )
@@ -35,7 +37,7 @@ class Project(Base):
         String, nullable=True, unique=True, comment="체인 계약 주소"
     )
     test_contract: Mapped[bool] = mapped_column(
-        String, nullable=True, unique=True, comment="테스트 계약 여부"
+        Boolean, nullable=False, default=False, unique=True, comment="테스트 계약 여부"
     )
 
     missions: Mapped[list["Mission"]] = relationship(

@@ -15,8 +15,8 @@ class GetWalletMissionResponse(BaseModel):
     url: str
     start_at: datetime.datetime
     end_at: datetime.datetime
-    draw_at: Optional[datetime.datetime]
-    reward_date: Optional[datetime.date]
+    draw_at: Optional[datetime.datetime] = None
+    reward_date: Optional[datetime.date] = None
 
     class Config:
         from_attributes = True

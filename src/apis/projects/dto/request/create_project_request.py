@@ -1,26 +1,15 @@
-import uuid
 from typing import Optional
 
 from pydantic import BaseModel
 
 
-class GetProjectData(BaseModel):
-    id: uuid.UUID
+class CreateProjectRequest(BaseModel):
     name: str
     image: str
     home_page: str
-    git_hub: Optional[str] = None
+    git_hub: str
     discord: Optional[str] = None
     twitter: Optional[str] = None
     twitter_handle: Optional[str] = None
     contract: Optional[str] = None
     test_contract: bool
-
-    class Config:
-        from_attributes = True
-
-
-class GetProjectsResponse(BaseModel):
-    projects: list[GetProjectData]
-    total: int
-    current_page: int

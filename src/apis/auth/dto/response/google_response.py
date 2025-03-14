@@ -11,10 +11,10 @@ class GoogleAuthResponse(BaseModel):
     email: str
     email_verified: bool
     nbf: int
-    name: Optional[str]
+    name: Optional[str] = None
     profile_image: Optional[str] = Field(alias="picture")
-    given_name: Optional[str]
-    family_name: Optional[str]
+    given_name: Optional[str] = None
+    family_name: Optional[str] = None
     iat: int
     exp: int
     jti: str
